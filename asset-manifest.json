@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/s-final/static/css/main.bae7425a.css",
+    "main.js": "/s-final/static/js/main.21b4c519.js",
+    "static/media/Neulis-BlackItalic.ttf": "/s-final/static/media/Neulis-BlackItalic.2cb04cbf605527282370.ttf",
+    "static/media/Neulis-ExtraBoldItalic.ttf": "/s-final/static/media/Neulis-ExtraBoldItalic.c298ea8fe09771dee70b.ttf",
+    "static/media/Neulis-Black.ttf": "/s-final/static/media/Neulis-Black.b6779886e8fb3e03a10f.ttf",
+    "static/media/Neulis-BoldItalic.ttf": "/s-final/static/media/Neulis-BoldItalic.b21d21c7db7c50047604.ttf",
+    "static/media/Neulis-ExtraBold.ttf": "/s-final/static/media/Neulis-ExtraBold.61ea496dccfaf5c05e9f.ttf",
+    "static/media/Neulis-Bold.ttf": "/s-final/static/media/Neulis-Bold.ed50bcc448df54e07bab.ttf",
+    "static/media/Neulis-SemiBoldItalic.ttf": "/s-final/static/media/Neulis-SemiBoldItalic.b14b26248a57aeff84fe.ttf",
+    "static/media/Neulis-MediumItalic.ttf": "/s-final/static/media/Neulis-MediumItalic.b57f7d248a4ecc1e0a89.ttf",
+    "static/media/Neulis-SemiBold.ttf": "/s-final/static/media/Neulis-SemiBold.7e64e4679f306fab627d.ttf",
+    "static/media/Neulis-Medium.ttf": "/s-final/static/media/Neulis-Medium.db9023cffbe127c7fab5.ttf",
+    "static/media/Neulis-Regular.ttf": "/s-final/static/media/Neulis-Regular.8d5e711d41e3840301eb.ttf",
+    "static/media/Neulis-LightItalic.ttf": "/s-final/static/media/Neulis-LightItalic.61fe9bcfcdb5a1637dfb.ttf",
+    "static/media/Neulis-ThinItalic.ttf": "/s-final/static/media/Neulis-ThinItalic.9642e5c752e61358c2a1.ttf",
+    "static/media/Neulis-Light.ttf": "/s-final/static/media/Neulis-Light.22e9fc15e1b25bb3e6d3.ttf",
+    "static/media/Neulis-ExtraLightItalic.ttf": "/s-final/static/media/Neulis-ExtraLightItalic.4d20f5fc59b934c3b19a.ttf",
+    "static/media/Neulis-Thin.ttf": "/s-final/static/media/Neulis-Thin.aeac213550548fcffa22.ttf",
+    "static/media/Neulis-ExtraLight.ttf": "/s-final/static/media/Neulis-ExtraLight.d5b6dcfcdb1d5162e205.ttf",
+    "static/media/icone-srgpn.png": "/s-final/static/media/icone-srgpn.7fa321f374f9fc7fdece.png",
+    "static/media/ADLaMDisplay-Regular.ttf": "/s-final/static/media/ADLaMDisplay-Regular.3153d4c72639c7d63f4c.ttf",
+    "static/media/plant-orange-red.png": "/s-final/static/media/plant-orange-red.7abf296e44baaa0ca086.png",
+    "static/media/plant-beige-green.png": "/s-final/static/media/plant-beige-green.e7023de9e7ee271f1bc1.png",
+    "static/media/plant-blue-beige.png": "/s-final/static/media/plant-blue-beige.6c28628ac3e87eee4c43.png",
+    "static/media/plant-red.png": "/s-final/static/media/plant-red.daab56b21a3371c45c12.png",
+    "static/media/plant-yellow.png": "/s-final/static/media/plant-yellow.07bb1989de545ebf1ebc.png",
+    "static/media/plant-red-yellow.png": "/s-final/static/media/plant-red-yellow.1bcbe42c10473f9c325a.png",
+    "index.html": "/s-final/index.html",
+    "main.bae7425a.css.map": "/s-final/static/css/main.bae7425a.css.map",
+    "main.21b4c519.js.map": "/s-final/static/js/main.21b4c519.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bae7425a.css",
+    "static/js/main.21b4c519.js"
+  ]
+}
