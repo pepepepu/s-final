@@ -39,13 +39,14 @@ const Access: React.FC = () => {
         </Div>
         <Div
           direction="row"
-          width={"50%"}
-          gap={40}
+          width={"80%"}
+          height={"20%"}
+          gap={20}
         >
           <Button
             margin={0}
             borderRadius={30}
-            padding={"30px 50px"}
+            padding={"2% 5%"}
             onClick={() => handleNavigate()}
             backgroundColor={colors.green}
             hoverBackgroundColor={"#76ac35"}
@@ -67,7 +68,7 @@ const Access: React.FC = () => {
           <Button
             margin={0}
             borderRadius={30}
-            padding={"30px 50px"}
+            padding={"2% 5%"}
             onClick={() => handleNavigateResults()}
             backgroundColor={colors.red}
             hoverBackgroundColor={"#bb271c"}
