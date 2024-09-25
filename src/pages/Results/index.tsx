@@ -120,11 +120,11 @@ const Results: React.FC = () => {
             ))
         )}
       </Div>
-      <Div direction="row" gap={25}>
+      <Div  width={"70%"} direction="row" gap={25}>
         <Button
           margin={0}
           borderRadius={30}
-          padding={"30px 50px"}
+          padding={"1.5% 4%"}
           onClick={() => handleNavigate()}
           backgroundColor={"#18171790"}
           hoverBackgroundColor="#4d3d1e"
@@ -140,7 +140,7 @@ const Results: React.FC = () => {
         <Button
           margin={0}
           borderRadius={30}
-          padding={"30px 50px"}
+          padding={"1.5% 4%"}
           onClick={() => handleResetScores()}
           backgroundColor={"#18171790"}
           hoverBackgroundColor="#4d3d1e"
