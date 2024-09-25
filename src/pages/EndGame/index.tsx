@@ -31,7 +31,7 @@ const EndGameScreen: React.FC = () => {
     >
       <Confetti width={width} height={height} />
       <PlantBoxCarousel />
-      <Div gap={40}>
+      <Div gap={40}  width={"100%"}>
         <Div>
           <Paragraph
             textShadow="2px 2px 4px rgba(0, 0, 0, 0.149)"
@@ -52,11 +52,11 @@ const EndGameScreen: React.FC = () => {
             Obrigado por participar!
           </Paragraph>
         </Div>
-        <Div direction="row" gap={30}>
+        <Div  height={"20%"} width={"70%"} direction="row" gap={30}>
           <Button
             margin={0}
             borderRadius={30}
-            padding={"30px 50px"}
+            padding={"1.5% 4%"}
             onClick={() => handleNavigateNewGame()}
             backgroundColor={colors.castanha}
             hoverBackgroundColor="#4d3d1e"
@@ -72,7 +72,7 @@ const EndGameScreen: React.FC = () => {
           <Button
             margin={0}
             borderRadius={30}
-            padding={"30px 50px"}
+            padding={"1.5% 4%"}
             onClick={() => handleNavigateResults()}
             backgroundColor={colors.castanha}
             hoverBackgroundColor="#4d3d1e"
