@@ -102,7 +102,7 @@ const GameTeam01: React.FC = () => {
           <Paragraph color={colors.preto} fontWeight={400} fontSize={25}>
             Vocês sabem o que significa
           </Paragraph>
-          <Div backgroundColor={colors.cinzaMedio} padding={"20px 100px"} radius={20}>
+          <Div backgroundColor={colors.cinzaMedio} padding={"4.5% 15%"} radius={20}>
             <Paragraph color={colors.preto} fontWeight={700} fontSize={80}>
               {currentQuestion.word}?
             </Paragraph>
@@ -115,7 +115,7 @@ const GameTeam01: React.FC = () => {
               width={"100%"}
               margin={0}
               borderRadius={30}
-              padding={"30px"}
+              padding={"4.5% 5%"}
               onClick={() => handleAnswer(answer)}
               backgroundColor={
                 selectedAnswer === answer ? colors.darkBlue : colors.cinza
@@ -148,7 +148,7 @@ const GameTeam01: React.FC = () => {
           <Button
             margin={"0px 0px 15px 0px"}
             borderRadius={30}
-            padding={"30px 50px"}
+            padding={"1.5% 4%"}
             onClick={handleNextQuestion}
             backgroundColor={colors.castanha}
             hoverBackgroundColor="#4d3d1e"
