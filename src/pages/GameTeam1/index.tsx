@@ -22,6 +22,9 @@ const GameTeam01: React.FC = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [teamName, setTeamName] = useState("");
 
+  const [showAnswerColors, setShowAnswerColors] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30);
+
   const navigate = useNavigate();
   const deviceType = getDeviceType();
 
@@ -36,25 +39,44 @@ const GameTeam01: React.FC = () => {
   }, []);
 
   const handleNextQuestion = () => {
-    if (selectedAnswer === currentQuestion.correctAnswer) {
-      setTeam1Score((prevScore) => prevScore + 1);
-    }
+    setShowAnswerColors(true); // Exibe as cores das respostas
 
-    const nextIndex = currentQuestionIndex + 1;
-    if (nextIndex < questions.length) {
-      setCurrentQuestionIndex(nextIndex);
-      setCurrentQuestion(questions[nextIndex]);
-      setSelectedAnswer(null);
-    } else {
-      addTeamScore(
-        teamName,
-        team1Score + (selectedAnswer === currentQuestion.correctAnswer ? 1 : 0)
-      );
+    setTimeout(() => {
+      if (selectedAnswer === currentQuestion.correctAnswer) {
+        setTeam1Score((prevScore) => prevScore + 1);
+      }
 
-      resetTeam1Score();
-      navigate("/endgame");
-    }
+      const nextIndex = currentQuestionIndex + 1;
+      if (nextIndex < questions.length) {
+        setCurrentQuestionIndex(nextIndex);
+        setCurrentQuestion(questions[nextIndex]);
+        setSelectedAnswer(null);
+        setShowAnswerColors(false); // Reseta a exibição de cores
+        setTimeLeft(30); // Reinicia o timer
+      } else {
+        addTeamScore(
+          teamName,
+          team1Score + (selectedAnswer === currentQuestion.correctAnswer ? 1 : 0)
+        );
+        resetTeam1Score();
+        navigate("/endgame");
+      }
+    }, 5000); // Aguarda 5 segundos antes de ir para a próxima pergunta
   };
+
+  // Efeito para o timer
+  useEffect(() => {
+    if (timeLeft === 0) {
+      handleNextQuestion(); // Passa automaticamente para a próxima pergunta quando o tempo acabar
+    }
+
+    const timer = setTimeout(() => {
+      setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+    }, 1000);
+
+    // Limpa o timer ao desmontar o componente ou carregar uma nova pergunta
+    return () => clearTimeout(timer);
+  }, [timeLeft]);
 
   return (
     <Div
@@ -104,12 +126,36 @@ const GameTeam01: React.FC = () => {
             </Paragraph>
           </Div>
           {deviceType !== "smartphone" &&
-            <Image
-              width={deviceType === "tablet" ? ("7%") : ("4.5%")}
-              src={require("../../assets/Icons/plants/plant-yellow.png")}
-              alt="Planta amarela"
-              animate={true}
-            />
+            <Div width={deviceType === "tablet" ? ("7%") : ("4.5%")}>
+              <Image
+                width={deviceType === "tablet" ? "100%" : "85%"}
+                src={require("../../assets/Icons/plants/plant-yellow.png")}
+                alt="Planta amarela"
+                animate={true}
+              >
+                {deviceType !== "tablet" &&
+                  <Div radius={20} padding={"10px"} backgroundColor={timeLeft <= 10 ? colors.red : colors.yellow}>
+                    <Paragraph
+                      color={colors.preto}
+                      fontWeight={800}
+                      fontSize={deviceType === "smartphone" ? (25) : (deviceType === "tablet" ? (15) : (15))}
+                    >
+                      {timeLeft}s
+                    </Paragraph>
+                  </Div>
+                }
+              </Image>
+              {deviceType !== "tablet" &&
+                <Paragraph
+                  width={"100%"}
+                  textAlign="center"
+                  color={colors.preto}
+                  fontSize={10}
+                >
+                  Tempo restante
+                </Paragraph>
+              }
+            </Div>
           }
         </Div>
         <Div gap={15}>
@@ -143,7 +189,15 @@ const GameTeam01: React.FC = () => {
               padding={"4.5% 5%"}
               onClick={() => handleAnswer(answer)}
               backgroundColor={
-                selectedAnswer === answer ? colors.darkBlue : colors.cinza
+                showAnswerColors
+                  ? answer === currentQuestion.correctAnswer
+                    ? colors.green
+                    : selectedAnswer === answer
+                      ? colors.red
+                      : colors.cinza
+                  : selectedAnswer === answer
+                    ? colors.darkBlue
+                    : colors.cinza
               }
               hoverBackgroundColor={colors.cinzaEscuro}
               boxShadow="2px 2px 10px rgba(0, 0, 0, 0.1123)"
@@ -151,18 +205,22 @@ const GameTeam01: React.FC = () => {
               hoverScale={1.05}
               animationDuration="0.4s"
             >
-              <Paragraph
-                width={"95%"}
-                color={selectedAnswer === answer ? colors.branco : colors.preto}
-                textAlign="left"
-                fontWeight={500}
-                fontSize={deviceType === "smartphone" ? (15) : (deviceType === "tablet" ? (20) : (25))}
-              >
+              <Paragraph width={"95%"} color={selectedAnswer === answer ? colors.branco : colors.preto} textAlign="left" fontWeight={500} fontSize={deviceType === "smartphone" ? 15 : deviceType === "tablet" ? 20 : 25}>
                 {answer}
               </Paragraph>
             </Button>
           ))}
         </Div>
+        {deviceType !== 'desktop' &&
+          <Div direction="row">
+            <Paragraph color={colors.preto}>
+              Tempo restante:
+            </Paragraph>
+            <Paragraph color={timeLeft <= 10 ? colors.red : colors.preto} fontWeight={800}>
+              {timeLeft}s
+            </Paragraph>
+          </Div>
+        }
         <Div
           direction="row"
           justify={deviceType === "smartphone" ? ("center") : ("space-between")}
@@ -187,7 +245,7 @@ const GameTeam01: React.FC = () => {
             hoverBoxShadow="4px 4px 15px rgba(0, 0, 0, 0.5)"
             hoverScale={1.1}
             animationDuration="0.4s"
-            disabled={!selectedAnswer}
+            disabled={!selectedAnswer || showAnswerColors}
           >
             <Paragraph
               fontWeight={700}
