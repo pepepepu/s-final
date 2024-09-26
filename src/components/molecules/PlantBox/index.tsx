@@ -2,16 +2,19 @@ import React from "react";
 import { Div, Image } from "../../atoms";
 
 interface PlantBoxProps {
-  backgroundColor: string,
+  backgroundColor: string;
   imageURL: string;
+  totalPlants: number;
 }
 
-const PlantBox: React.FC<PlantBoxProps> = ({ backgroundColor, imageURL }) => {
+const PlantBox: React.FC<PlantBoxProps> = ({ backgroundColor, imageURL, totalPlants }) => {
+  const width = `${100 / totalPlants}%`;
+
   return (
-    <Div height={"100%"} width={"10%"} backgroundColor={backgroundColor} >
+    <Div height={"100%"} width={width} backgroundColor={backgroundColor}>
       <Image height={"45%"} src={imageURL} alt="Plant BG" animate={true} />
-    </Div >
-  )
+    </Div>
+  );
 }
 
 export default PlantBox;

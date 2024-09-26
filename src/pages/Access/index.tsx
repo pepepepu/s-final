@@ -2,9 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import colors from "../../styles/colors";
 import { Button, Div, Paragraph, Image, PlantBox, PlantBoxCarousel } from "../../components";
+import getDeviceType from "../../hooks/getDeviceType";
 
 const Access: React.FC = () => {
   const navigate = useNavigate();
+  const deviceType = getDeviceType();
 
   const handleNavigate = () => {
     navigate("/gameTeam01");
@@ -29,24 +31,30 @@ const Access: React.FC = () => {
       >
         <Div>
           <Image
-            width={200}
+            width={deviceType === "smartphone" ? 150 : (deviceType === "tablet" ? 175 : 200)}
             src={require("../../assets/Icons/icone-srgpn.png")}
             alt="Logo"
           />
-          <Paragraph textShadow="2px 2px 2px rgba(0, 0, 0, 0.149)" fontSize={60} fontWeight={700} color={colors.preto}>
+          <Paragraph
+            textShadow="2px 2px 2px rgba(0, 0, 0, 0.149)"
+            fontSize={deviceType === "smartphone" ? "40px" : (deviceType === "tablet" ? "55px" : "60px")}
+            fontWeight={700}
+            color={colors.preto}
+          >
             Sergipanês
           </Paragraph>
         </Div>
         <Div
-          direction="row"
+          direction={deviceType === "smartphone" ? "column" : "row"}
           width={"80%"}
           height={"20%"}
-          gap={20}
+          gap={deviceType === "smartphone" ? 10 : 20}
         >
           <Button
+            width={deviceType === "smartphone" ? "80%" : (deviceType === "tablet" ? "50%" : "20%")}
             margin={0}
+            padding={deviceType === "smartphone" ? "15px 0px" : "20px 0px"}
             borderRadius={30}
-            padding={"2% 5%"}
             onClick={() => handleNavigate()}
             backgroundColor={colors.green}
             hoverBackgroundColor={"#76ac35"}
@@ -56,7 +64,7 @@ const Access: React.FC = () => {
             animationDuration="0.9s"
           >
             <Paragraph
-              fontSize={25}
+              fontSize={deviceType === "smartphone" ? 20 : 25}
               fontFamily="Neulis"
               fontWeight={500}
               color={"#2C1F26"}
@@ -64,11 +72,11 @@ const Access: React.FC = () => {
               Iniciar partida
             </Paragraph>
           </Button>
-
           <Button
+            width={deviceType === "smartphone" ? "80%" : (deviceType === "tablet" ? "45%" : "20%")}
             margin={0}
+            padding={deviceType === "smartphone" ? "15px 0px" : "20px 0px"}
             borderRadius={30}
-            padding={"2% 5%"}
             onClick={() => handleNavigateResults()}
             backgroundColor={colors.red}
             hoverBackgroundColor={"#bb271c"}
@@ -78,7 +86,7 @@ const Access: React.FC = () => {
             animationDuration="0.9s"
           >
             <Paragraph
-              fontSize={25}
+              fontSize={deviceType === "smartphone" ? 20 : 25}
               fontFamily="Neulis"
               fontWeight={500}
               color="#f5f7cd"
