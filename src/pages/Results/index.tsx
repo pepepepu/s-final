@@ -106,12 +106,12 @@ const Results: React.FC = () => {
         </Paragraph>
       </Div>
       <ScrollableDiv
-        width={deviceType === "smartphone" ? "60%" : deviceType === "tablet" ? "60%" : "40%"}
+        width={deviceType === "smartphone" ? "80%" : deviceType === "tablet" ? "60%" : "40%"}
         gap={15}
       >
         {teamScores.length === 0 ? (
           <Div
-            width={"95%"}
+            width={"80%"}
             padding={"20px 20px"}
             direction="row"
             backgroundColor={"#18171740"}
