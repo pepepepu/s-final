@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Div, Paragraph, Button } from "../../components";
 import { useGame } from "../../context/GameContext";
 import colors from "../../styles/colors";
+import getDeviceType from "../../hooks/getDeviceType";
 
 // Animação de queda ajustada para terminar em 100vh
 const fallAnimation = keyframes`
@@ -38,9 +39,23 @@ const FallingImage = styled.img<{ delay: number }>`
   opacity: 0;
 `;
 
+const ScrollableDiv = styled(Div)`
+  max-height:"25%";
+  overflow-y: auto;
+  padding-right: 10px;
+  padding-top: 10px;
+  margin-top: 0;  /* Garante que não haja margem no topo */
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+`;
+
 const Results: React.FC = () => {
   const { teamScores, resetScores } = useGame();
   const navigate = useNavigate();
+  const deviceType = getDeviceType();
   const [fallingImages, setFallingImages] = useState<number[]>([]);
   const images = [
     require("../../assets/Icons/plants/plant-beige-green.png"),
@@ -52,10 +67,6 @@ const Results: React.FC = () => {
 
   const handleNavigate = () => {
     navigate("/s-final");
-  };
-
-  const handleResetScores = () => {
-    resetScores();
   };
 
   useEffect(() => {
@@ -73,23 +84,46 @@ const Results: React.FC = () => {
       position="relative"
     >
       {fallingImages.map((_, index) => {
-        // Seleciona uma imagem aleatória
         const randomImage = images[Math.floor(Math.random() * images.length)];
         return (
           <FallingImage
             key={index}
             src={randomImage}
-            delay={index * 0.5} // Delay para cada imagem
+            delay={index * 0.5}
           />
         );
       })}
-      <Div width={"50%"} height={"20%"} backgroundColor="#18171771" radius={20}>
-        <Paragraph fontSize={60} fontWeight={700}>Resultados</Paragraph>
+      <Div
+        width={deviceType === "smartphone" ? ("90%") : (deviceType === "tablet" ? "70%" : "30%")}
+        height={deviceType === "smartphone" ? "10%" : (deviceType === "tablet" ? "15%" : "20%")}
+        backgroundColor="#18171771"
+        radius={20}
+      >
+        <Paragraph
+          fontSize={deviceType === "smartphone" ? 50 : 70}
+          fontWeight={700}
+        >
+          Resultados
+        </Paragraph>
       </Div>
-      <Div width={"50%"} gap={15}>
+      <ScrollableDiv
+        width={deviceType === "smartphone" ? "60%" : deviceType === "tablet" ? "60%" : "40%"}
+        gap={15}
+      >
         {teamScores.length === 0 ? (
-          <Div width={"95%"} padding={"20px 20px"} direction="row" backgroundColor={"#18171740"} radius={20}>
-            <Paragraph fontSize={25} fontWeight={700} color={colors.preto}>
+          <Div
+            width={"95%"}
+            padding={"20px 20px"}
+            direction="row"
+            backgroundColor={"#18171740"}
+            radius={20}
+            margin="10px 0"
+          >
+            <Paragraph
+              fontSize={20}
+              fontWeight={700}
+              color={colors.preto}
+            >
               Placar vazio
             </Paragraph>
           </Div>
@@ -97,7 +131,15 @@ const Results: React.FC = () => {
           teamScores
             .sort((a, b) => b.points - a.points)
             .map((teamScore, index) => (
-              <Div key={index} width={"95%"} padding={"20px 20px"} direction="row" justify="flex-start" backgroundColor={"#18171740"} radius={20}>
+              <Div
+                key={index}
+                width={"95%"}
+                padding={"20px 20px"}
+                direction="row"
+                justify="flex-start"
+                backgroundColor={"#18171740"}
+                radius={20}
+              >
                 <Paragraph
                   fontWeight={700}
                   fontSize={20}
@@ -119,12 +161,16 @@ const Results: React.FC = () => {
               </Div>
             ))
         )}
-      </Div>
-      <Div  width={"70%"} direction="row" gap={25}>
+      </ScrollableDiv>
+      <Div
+        width={"75%"}
+        direction={deviceType === "smartphone" ? "column" : "row"}
+      >
         <Button
+          width={deviceType === "smartphone" ? "100%" : (deviceType === "tablet" ? "50%" : "20%")}
           margin={0}
+          padding={deviceType === "smartphone" ? "10px 0px" : "20px 0px"}
           borderRadius={30}
-          padding={"1.5% 4%"}
           onClick={() => handleNavigate()}
           backgroundColor={"#18171790"}
           hoverBackgroundColor="#4d3d1e"
@@ -135,23 +181,6 @@ const Results: React.FC = () => {
         >
           <Paragraph fontWeight={700} fontSize={25}>
             Voltar para início
-          </Paragraph>
-        </Button>
-        <Button
-          margin={0}
-          borderRadius={30}
-          padding={"1.5% 4%"}
-          onClick={() => handleResetScores()}
-          backgroundColor={"#18171790"}
-          hoverBackgroundColor="#4d3d1e"
-          boxShadow="2px 2px 10px rgba(0, 0, 0, 0.3)"
-          hoverBoxShadow="4px 4px 15px rgba(0, 0, 0, 0.5)"
-          hoverScale={1.1}
-          animationDuration="0.4s"
-          disabled={teamScores.length === 0}
-        >
-          <Paragraph fontWeight={700} fontSize={25}>
-            Zerar placar
           </Paragraph>
         </Button>
       </Div>
