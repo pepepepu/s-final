@@ -4,6 +4,7 @@ import { Div, Paragraph, Button, Image } from "../../components";
 import colors from "../../styles/colors";
 import questions from "../../data/words";
 import { useGame } from "../../context/GameContext";
+import getDeviceType from "../../hooks/getDeviceType";
 
 type Question = {
   word: string;
@@ -22,6 +23,7 @@ const GameTeam01: React.FC = () => {
   const [teamName, setTeamName] = useState("");
 
   const navigate = useNavigate();
+  const deviceType = getDeviceType();
 
   const handleAnswer = (answer: string) => {
     setSelectedAnswer(answer);
@@ -61,54 +63,77 @@ const GameTeam01: React.FC = () => {
       backgroundColor={colors.blue}
       direction="column"
       justify="center"
-      gap={40}
     >
       <Div
-        width={"90%"}
-        height={"85%"}
+        width={deviceType === "smartphone" ? ("75%") : (deviceType === "tablet" ? ("85%") : ("90%"))}
+        height={deviceType === "smartphone" ? ("") : ("85%")}
         backgroundColor={colors.branco}
         radius={20}
         shadow="2px 2px 10px rgba(0, 0, 0, 0.3)"
-        justify="space-between"
-        padding={"20px 30px"}
+        justify={deviceType === "smartphone" ? ("center") : ("space-between")}
+        gap={deviceType === "smartphone" ? (20) : (0)}
+        padding={deviceType === "smartphone" ? ("35px 30px") : ("20px 30px")}
       >
         <Div
           width={"100%"}
-          justify="space-between"
+          justify={deviceType === "smartphone" ? ("center") : ("space-between")}
           direction="row"
         >
-          <Image
-            width={"4.5%"}
-            src={require("../../assets/Icons/plants/plant-blue-beige.png")}
-            alt="Planta azul e bege"
-            animate={true}
-          />
+          {deviceType !== "smartphone" &&
+            <Image
+              width={deviceType === "tablet" ? ("7%") : ("4.5%")}
+              src={require("../../assets/Icons/plants/plant-blue-beige.png")}
+              alt="Planta azul e bege"
+              animate={true}
+            />
+          }
           <Div direction="row" gap={15}>
-            <Paragraph color={colors.preto} fontWeight={500} fontSize={50}>
+            <Paragraph
+              color={colors.preto}
+              fontWeight={500}
+              fontSize={deviceType === "smartphone" ? (30) : (deviceType === "tablet" ? (40) : (50))}
+            >
               Equipe:
             </Paragraph>
-            <Paragraph color={colors.preto} fontWeight={800} fontSize={50}>
+            <Paragraph
+              color={colors.preto}
+              fontWeight={800}
+              fontSize={deviceType === "smartphone" ? (30) : (deviceType === "tablet" ? (40) : (50))}
+            >
               {teamName}
             </Paragraph>
           </Div>
-          <Image
-            width={"4.75%"}
-            src={require("../../assets/Icons/plants/plant-yellow.png")}
-            alt="Planta amarela"
-            animate={true}
-          />
+          {deviceType !== "smartphone" &&
+            <Image
+              width={deviceType === "tablet" ? ("7%") : ("4.5%")}
+              src={require("../../assets/Icons/plants/plant-yellow.png")}
+              alt="Planta amarela"
+              animate={true}
+            />
+          }
         </Div>
         <Div gap={15}>
-          <Paragraph color={colors.preto} fontWeight={400} fontSize={25}>
+          <Paragraph
+            color={colors.preto}
+            fontWeight={400}
+            fontSize={deviceType === "smartphone" ? (15) : (deviceType === "tablet" ? (20) : (25))}
+          >
             Vocês sabem o que significa
           </Paragraph>
           <Div backgroundColor={colors.cinzaMedio} padding={"4.5% 15%"} radius={20}>
-            <Paragraph color={colors.preto} fontWeight={700} fontSize={80}>
+            <Paragraph
+              color={colors.preto}
+              fontWeight={800}
+              fontSize={deviceType === "smartphone" ? (40) : (deviceType === "tablet" ? (65) : (90))}
+            >
               {currentQuestion.word}?
             </Paragraph>
           </Div>
         </Div>
-        <Div width={"40%"} gap={20}>
+        <Div
+          width={deviceType === "smartphone" ? ("100%") : (deviceType === "tablet" ? ("85%") : ("40%"))}
+          gap={20}
+        >
           {currentQuestion.answers.map((answer, index) => (
             <Button
               key={index}
@@ -131,24 +156,30 @@ const GameTeam01: React.FC = () => {
                 color={selectedAnswer === answer ? colors.branco : colors.preto}
                 textAlign="left"
                 fontWeight={500}
-                fontSize={25}
+                fontSize={deviceType === "smartphone" ? (15) : (deviceType === "tablet" ? (20) : (25))}
               >
                 {answer}
               </Paragraph>
             </Button>
           ))}
         </Div>
-        <Div direction="row" justify="space-between" width={"100%"}>
-          <Image
-            width={"5%"}
-            src={require("../../assets/Icons/plants/plant-red-yellow.png")}
-            alt="Planta vermelha e amarela"
-            animate={true}
-          />
+        <Div
+          direction="row"
+          justify={deviceType === "smartphone" ? ("center") : ("space-between")}
+          width={"100%"}
+        >
+          {deviceType !== "smartphone" &&
+            <Image
+              width={deviceType === "tablet" ? ("7.5%") : ("5%")}
+              src={require("../../assets/Icons/plants/plant-red-yellow.png")}
+              alt="Planta vermelha e amarela"
+              animate={true}
+            />
+          }
           <Button
             margin={"0px 0px 15px 0px"}
             borderRadius={30}
-            padding={"1.5% 4%"}
+            padding={deviceType === "smartphone" ? ("10px 25px") : (deviceType === "tablet" ? ("15px 25px") : ("20px 25px"))}
             onClick={handleNextQuestion}
             backgroundColor={colors.castanha}
             hoverBackgroundColor="#4d3d1e"
@@ -158,18 +189,23 @@ const GameTeam01: React.FC = () => {
             animationDuration="0.4s"
             disabled={!selectedAnswer}
           >
-            <Paragraph fontWeight={700} fontSize={25}>
+            <Paragraph
+              fontWeight={700}
+              fontSize={deviceType === "smartphone" ? (20) : (25)}
+            >
               {currentQuestionIndex < questions.length - 1
                 ? "Próxima"
                 : "Finalizar"}
             </Paragraph>
           </Button>
-          <Image
-            width={"5%"}
-            src={require("../../assets/Icons/plants/plant-beige-green.png")}
-            alt="Planta bege e verde"
-            animate={true}
-          />
+          {deviceType !== "smartphone" &&
+            <Image
+              width={deviceType === "tablet" ? ("7.5%") : ("5%")}
+              src={require("../../assets/Icons/plants/plant-beige-green.png")}
+              alt="Planta bege e verde"
+              animate={true}
+            />
+          }
         </Div>
       </Div>
     </Div>
