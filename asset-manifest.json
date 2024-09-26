@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/s-final/static/css/main.bae7425a.css",
-    "main.js": "/s-final/static/js/main.909c6909.js",
+    "main.js": "/s-final/static/js/main.eb205776.js",
     "static/media/Neulis-BlackItalic.ttf": "/s-final/static/media/Neulis-BlackItalic.2cb04cbf605527282370.ttf",
     "static/media/Neulis-ExtraBoldItalic.ttf": "/s-final/static/media/Neulis-ExtraBoldItalic.c298ea8fe09771dee70b.ttf",
     "static/media/Neulis-Black.ttf": "/s-final/static/media/Neulis-Black.b6779886e8fb3e03a10f.ttf",
@@ -29,10 +29,10 @@
     "static/media/plant-red-yellow.png": "/s-final/static/media/plant-red-yellow.1bcbe42c10473f9c325a.png",
     "index.html": "/s-final/index.html",
     "main.bae7425a.css.map": "/s-final/static/css/main.bae7425a.css.map",
-    "main.909c6909.js.map": "/s-final/static/js/main.909c6909.js.map"
+    "main.eb205776.js.map": "/s-final/static/js/main.eb205776.js.map"
   },
   "entrypoints": [
     "static/css/main.bae7425a.css",
-    "static/js/main.909c6909.js"
+    "static/js/main.eb205776.js"
   ]
 }
