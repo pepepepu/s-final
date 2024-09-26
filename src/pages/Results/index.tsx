@@ -40,9 +40,8 @@ const FallingImage = styled.img<{ delay: number }>`
 `;
 
 const ScrollableDiv = styled(Div)`
-  max-height:"25%";
+  max-height:25%;
   overflow-y: auto;
-  padding-right: 10px;
   padding-top: 10px;
   margin-top: 0;  /* Garante que não haja margem no topo */
   ::-webkit-scrollbar {
