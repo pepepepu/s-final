@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Div, Paragraph, Button, PlantBoxCarousel } from "../../components";
 import { useGame } from "../../context/GameContext";
 import colors from "../../styles/colors";
@@ -7,9 +7,14 @@ import Confetti from "react-confetti";
 import getDeviceType from "../../hooks/getDeviceType";
 
 const EndGameScreen: React.FC = () => {
-  const { team1Score, setTeam1Score } = useGame();
+  const { setTeam1Score, teamScores } = useGame();
   const deviceType = getDeviceType();
   const navigate = useNavigate();
+
+  const { state } = useLocation();
+  const teamName = state?.teamName || "Equipe Desconhecida";
+
+  const team1 = teamScores.find((team) => team.teamName === teamName);
 
   const { innerWidth: width, innerHeight: height } = window;
 
@@ -52,6 +57,24 @@ const EndGameScreen: React.FC = () => {
             color={colors.preto}
           >
             Obrigado por participar!
+          </Paragraph>
+        </Div>
+        <Div gap={10}>
+          <Paragraph
+            textShadow="2px 2px 4px rgba(0, 0, 0, 0.149)"
+            fontSize={deviceType === "smartphone" ? 25 : 30}
+            fontWeight={700}
+            color={colors.preto}
+          >
+            Pontuação da equipe {team1 ? team1.teamName : "Equipe Desconhecida"}:
+          </Paragraph>
+          <Paragraph
+            textShadow="2px 2px 4px rgba(0, 0, 0, 0.149)"
+            fontSize={deviceType === "smartphone" ? 25 : 40}
+            fontWeight={700}
+            color={colors.preto}
+          >
+            {team1 ? team1.points : "Sem pontuação disponível"}
           </Paragraph>
         </Div>
         <Div

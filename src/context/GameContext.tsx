@@ -46,8 +46,23 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const addTeamScore = (teamName: string, points: number) => {
-    setTeamScores((prevScores) => [...prevScores, { teamName, points }]);
+    setTeamScores((prevScores) => {
+      const existingTeam = prevScores.find((team) => team.teamName === teamName);
+
+      if (existingTeam) {
+        // Se a equipe já existe, atualiza sua pontuação
+        return prevScores.map((team) =>
+          team.teamName === teamName
+            ? { ...team, points: team.points + points }
+            : team
+        );
+      } else {
+        // Se a equipe não existe, adiciona uma nova entrada
+        return [...prevScores, { teamName, points }];
+      }
+    });
   };
+
 
   const resetTeam1Score = () => {
     setTeam1Score(0);

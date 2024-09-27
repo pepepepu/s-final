@@ -78,7 +78,7 @@ const GameTeam01: React.FC = () => {
           team1Score + (selectedAnswer === currentQuestion.correctAnswer ? 1 : 0)
         );
         resetTeam1Score();
-        navigate("/endgame");
+        navigate("/endgame", { state: { teamName } });
       }
     }, 5000);
   };
