@@ -24,7 +24,7 @@ const GameTeam01: React.FC = () => {
 
   const [showAnswerColors, setShowAnswerColors] = useState(false);
   const [isCounting, setIsCounting] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(180);
+  const [timeLeft, setTimeLeft] = useState(30);
   const [countdown, setCountdown] = useState(5);
 
   const navigate = useNavigate();
