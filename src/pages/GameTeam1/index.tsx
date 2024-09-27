@@ -23,7 +23,9 @@ const GameTeam01: React.FC = () => {
   const [teamName, setTeamName] = useState("");
 
   const [showAnswerColors, setShowAnswerColors] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [isCounting, setIsCounting] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(180);
+  const [countdown, setCountdown] = useState(5);
 
   const navigate = useNavigate();
   const deviceType = getDeviceType();
@@ -32,16 +34,33 @@ const GameTeam01: React.FC = () => {
     setSelectedAnswer(answer);
   };
 
+  const isCorrect = (answer: string) => answer === currentQuestion.correctAnswer;
+
+  const getAnswerSymbol = (answer: string) => {
+    if (showAnswerColors) {
+      return isCorrect(answer) ? "✔" : selectedAnswer === answer ? "✘" : "";
+    }
+    return "";
+  };
+
   useEffect(() => {
-    // Definir o nome da equipe ao iniciar uma nova rodada
     const newTeamName = getRandomTeamName();
     setTeamName(newTeamName);
   }, []);
 
   const handleNextQuestion = () => {
-    setShowAnswerColors(true); // Exibe as cores das respostas
+    setShowAnswerColors(true);
+    setIsCounting(true);
+    setCountdown(5);
+
+    const countdownInterval = setInterval(() => {
+      setCountdown((prevCountdown) => prevCountdown - 1);
+    }, 1000);
 
     setTimeout(() => {
+      clearInterval(countdownInterval);
+      setIsCounting(false);
+
       if (selectedAnswer === currentQuestion.correctAnswer) {
         setTeam1Score((prevScore) => prevScore + 1);
       }
@@ -51,8 +70,8 @@ const GameTeam01: React.FC = () => {
         setCurrentQuestionIndex(nextIndex);
         setCurrentQuestion(questions[nextIndex]);
         setSelectedAnswer(null);
-        setShowAnswerColors(false); // Reseta a exibição de cores
-        setTimeLeft(30); // Reinicia o timer
+        setShowAnswerColors(false);
+        setTimeLeft(30);
       } else {
         addTeamScore(
           teamName,
@@ -61,20 +80,18 @@ const GameTeam01: React.FC = () => {
         resetTeam1Score();
         navigate("/endgame");
       }
-    }, 5000); // Aguarda 5 segundos antes de ir para a próxima pergunta
+    }, 5000);
   };
 
-  // Efeito para o timer
   useEffect(() => {
     if (timeLeft === 0) {
-      handleNextQuestion(); // Passa automaticamente para a próxima pergunta quando o tempo acabar
+      handleNextQuestion();
     }
 
     const timer = setTimeout(() => {
       setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
     }, 1000);
 
-    // Limpa o timer ao desmontar o componente ou carregar uma nova pergunta
     return () => clearTimeout(timer);
   }, [timeLeft]);
 
@@ -190,24 +207,46 @@ const GameTeam01: React.FC = () => {
               onClick={() => handleAnswer(answer)}
               backgroundColor={
                 showAnswerColors
-                  ? answer === currentQuestion.correctAnswer
-                    ? colors.green
+                  ? isCorrect(answer)
+                    ? colors.cinzaEscuro // resposta correta
                     : selectedAnswer === answer
-                      ? colors.red
-                      : colors.cinza
+                      ? colors.cinzaEscuro // resposta selecionada
+                      : colors.branco // outras respostas
                   : selectedAnswer === answer
-                    ? colors.darkBlue
-                    : colors.cinza
+                    ? colors.darkBlue // resposta selecionada mas resultado não revelado
+                    : colors.cinza // respostas não selecionadas
               }
               hoverBackgroundColor={colors.cinzaEscuro}
-              boxShadow="2px 2px 10px rgba(0, 0, 0, 0.1123)"
-              hoverBoxShadow="4px 4px 15px rgba(0, 0, 0, 0.5)"
+              boxShadow={
+                showAnswerColors || selectedAnswer === answer
+                  ? "none"
+                  : "2px 2px 10px rgba(0, 0, 0, 0.1123)"
+              }
+              hoverBoxShadow={
+                showAnswerColors || selectedAnswer === answer
+                  ? "none"
+                  : "4px 4px 15px rgba(0, 0, 0, 0.5)"
+              }
               hoverScale={1.05}
               animationDuration="0.4s"
+              disabled={showAnswerColors}
             >
-              <Paragraph width={"95%"} color={selectedAnswer === answer ? colors.branco : colors.preto} textAlign="left" fontWeight={500} fontSize={deviceType === "smartphone" ? 15 : deviceType === "tablet" ? 20 : 25}>
-                {answer}
-              </Paragraph>
+              <Div justify="space-between" direction="row" width={"100%"}>
+                <Paragraph
+                  color={selectedAnswer === answer ? colors.branco : colors.preto}
+                  fontWeight={500}
+                  fontSize={deviceType === "smartphone" ? 15 : deviceType === "tablet" ? 20 : 25}
+                >
+                  {answer}
+                </Paragraph>
+                <Paragraph
+                  color={colors.preto}
+                  fontWeight={500}
+                  fontSize={deviceType === "smartphone" ? 15 : deviceType === "tablet" ? 18 : 23}
+                >
+                  {getAnswerSymbol(answer)}
+                </Paragraph>
+              </Div>
             </Button>
           ))}
         </Div>
@@ -239,7 +278,7 @@ const GameTeam01: React.FC = () => {
             borderRadius={30}
             padding={deviceType === "smartphone" ? ("10px 25px") : (deviceType === "tablet" ? ("15px 25px") : ("20px 25px"))}
             onClick={handleNextQuestion}
-            backgroundColor={colors.castanha}
+            backgroundColor={selectedAnswer ? colors.castanha : colors.cinzaEscuro}
             hoverBackgroundColor="#4d3d1e"
             boxShadow="2px 2px 10px rgba(0, 0, 0, 0.3)"
             hoverBoxShadow="4px 4px 15px rgba(0, 0, 0, 0.5)"
@@ -251,9 +290,7 @@ const GameTeam01: React.FC = () => {
               fontWeight={700}
               fontSize={deviceType === "smartphone" ? (20) : (25)}
             >
-              {currentQuestionIndex < questions.length - 1
-                ? "Próxima"
-                : "Finalizar"}
+              {isCounting ? `${countdown}s` : currentQuestionIndex < questions.length - 1 ? "Próxima" : "Finalizar"}
             </Paragraph>
           </Button>
           {deviceType !== "smartphone" &&

@@ -58,11 +58,8 @@ const StyledButton = styled.button<ButtonProps>`
   }
 
   &:disabled {
-    background-color: ${(props) => props.backgroundColor ? "#999" : "#ccc"};
-    color: #666;
-    cursor: not-allowed;
-    box-shadow: none;
-    opacity: 0.7;
+    pointer-events: none;
+    background-color: ${(props) => props.backgroundColor};
   }
 `;
 

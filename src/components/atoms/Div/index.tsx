@@ -56,6 +56,8 @@ const StyledDiv = styled.div<StyledProps>`
   overflow: ${(props) => props.overflow || "visible"};
   white-space: ${(props) => props.whiteSpace || "normal"};
   scroll-behavior: ${(props) => props.scrollBehavior || "auto"};
+
+  transition: background-color 0.3s ease-in-out, width 0.3s ease-in-out;
 `;
 
 const Div = forwardRef<HTMLDivElement, StyledProps>(({ children, ...props }, ref) => {
